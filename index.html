@@ -1,0 +1,1174 @@
+<section class="wb wb-winkbrows wb-fullbleed" id="wb-top" aria-label="Winkbrows 一頁式形象頁（滿版現代版）">
+  <style>
+    /* ==========================================================
+      Winkbrows LP (Full-bleed, modern, no external frameworks)
+      - WordPress Gutenberg Custom HTML: paste as-is
+      - No JS; FAQ uses <details>
+      - Floating CTAs bottom-right: LINE / IG / Back-to-top
+      - Top sticky nav (desktop) + <details> menu (mobile)
+    ========================================================== */
+
+    /* Full-bleed breakout (works on most WP themes) */
+    .wb-fullbleed{
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      position: relative;
+      isolation: isolate;
+    }
+
+    .wb.wb-winkbrows{
+      /* Tokens */
+      --bg: #fbfaf6;
+      --ink: #111827;
+      --muted: rgba(17,24,39,.68);
+      --line: rgba(17,24,39,.10);
+
+      --accent: #e6c46c;
+      --accent-2: #fff1c2;
+      --accent-3: #f7e2a1;
+
+      --radius: 22px;
+      --shadow: 0 24px 60px rgba(17,24,39,.12);
+      --shadow-soft: 0 14px 34px rgba(17,24,39,.10);
+
+      --max: 1240px;
+      --gutter: clamp(16px, 2.2vw, 28px);
+
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      overflow: visible;
+    }
+
+    .wb *{ box-sizing: border-box; }
+    .wb a{ color: inherit; text-decoration: none; }
+    .wb a:focus-visible, .wb summary:focus-visible{
+      outline: 3px solid rgba(230,196,108,.55);
+      outline-offset: 3px;
+      border-radius: 14px;
+    }
+
+    /* Ambient background (full-bleed) */
+    .wb::before{
+      content:"";
+      position:absolute;
+      inset: -220px -220px auto -220px;
+      height: 680px;
+      background:
+        radial-gradient(closest-side at 18% 32%, rgba(255,241,194,.90) 0%, rgba(255,241,194,0) 70%),
+        radial-gradient(closest-side at 82% 20%, rgba(230,196,108,.58) 0%, rgba(230,196,108,0) 66%),
+        radial-gradient(closest-side at 62% 78%, rgba(247,226,161,.55) 0%, rgba(247,226,161,0) 70%);
+      z-index: -2;
+      filter: blur(1px);
+    }
+
+    /* Layout */
+    .wb .wb-container{ max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+    .wb .wb-section{ padding: clamp(30px, 4.4vw, 64px) 0; }
+
+    .wb .wb-grid{ display:grid; gap: clamp(12px, 1.6vw, 18px); }
+    .wb .wb-grid-2{ grid-template-columns: 1.08fr .92fr; align-items: center; }
+    .wb .wb-grid-3{ grid-template-columns: repeat(3, 1fr); }
+    .wb .wb-grid-4{ grid-template-columns: repeat(4, 1fr); }
+    @media (max-width: 980px){
+      .wb .wb-grid-2{ grid-template-columns: 1fr; }
+      .wb .wb-grid-3{ grid-template-columns: 1fr; }
+      .wb .wb-grid-4{ grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px){
+      .wb .wb-grid-4{ grid-template-columns: 1fr; }
+    }
+
+    /* Type */
+    .wb .wb-h1{
+      font-size: clamp(34px, 3.8vw, 56px);
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      margin: 14px 0 14px;
+    }
+    .wb .wb-h2{
+      font-size: clamp(22px, 2.2vw, 32px);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin: 0 0 10px;
+    }
+    .wb .wb-h3{
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      font-weight: 900;
+    }
+    .wb .wb-lead{
+      font-size: clamp(15px, 1.25vw, 18px);
+      line-height: 1.75;
+      color: rgba(17,24,39,.86);
+      margin: 0 0 16px;
+    }
+    .wb .wb-muted{ color: var(--muted); }
+    .wb .wb-small{ font-size: 13px; line-height: 1.7; color: rgba(17,24,39,.60); }
+
+    /* Surfaces */
+    .wb .wb-card{
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(17,24,39,.10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      overflow: hidden;
+    }
+    .wb .wb-card-inner{ padding: clamp(16px, 2.0vw, 22px); }
+    .wb .wb-divider{ height: 1px; background: rgba(17,24,39,.10); margin: 18px 0; opacity: .95; }
+
+    /* Buttons (right aligned by default) */
+    .wb .wb-actions{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .wb .wb-btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding: 13px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(17,24,39,.12);
+      background: rgba(255,255,255,.86);
+      font-weight: 900;
+      font-size: 15px;
+      min-height: 46px;
+      transition: transform .12s ease, box-shadow .18s ease, background-color .18s ease;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .wb .wb-btn:hover{ transform: translateY(-1px); box-shadow: 0 16px 40px rgba(17,24,39,.12); }
+    .wb .wb-btn:active{ transform: translateY(0px); box-shadow: none; }
+
+    .wb .wb-btn-primary{
+      border-color: rgba(230,196,108,.75);
+      background: linear-gradient(180deg, rgba(230,196,108,1), rgba(230,196,108,.85));
+      color: rgba(17,24,39,.92);
+    }
+    .wb .wb-btn-ghost{
+      background: rgba(255,255,255,.74);
+      border-color: rgba(17,24,39,.16);
+      color: rgba(17,24,39,.90);
+    }
+    .wb .wb-ico{ width: 18px; height: 18px; flex: 0 0 18px; color: rgba(17,24,39,.86); }
+    .wb .wb-ico-soft{ width: 20px; height: 20px; color: rgba(17,24,39,.72); }
+
+    /* Top nav */
+    .wb .wb-nav{
+      position: sticky;
+      top: 0;
+      z-index: 5000;
+      border-bottom: 1px solid rgba(17,24,39,.08);
+      background: rgba(251,250,246,.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .wb .wb-navbar{
+      display:flex; align-items:center; justify-content: space-between;
+      padding: 12px 0;
+      gap: 14px;
+    }
+    .wb .wb-brand{
+      display:flex; align-items:center; gap: 10px;
+      font-weight: 1000;
+      letter-spacing: -0.02em;
+      font-size: 18px;
+      white-space: nowrap;
+    }
+    .wb .wb-dot{
+      width: 10px; height: 10px; border-radius: 999px;
+      background: rgba(230,196,108,.95);
+      box-shadow: 0 0 0 6px rgba(230,196,108,.18);
+    }
+    .wb .wb-menu{
+      display:flex; align-items:center; gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .wb .wb-menu a{
+      display:inline-flex; align-items:center; gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(17,24,39,.10);
+      background: rgba(255,255,255,.60);
+      font-size: 13px;
+      color: rgba(17,24,39,.78);
+    }
+    .wb .wb-menu a:hover{
+      background: rgba(255,255,255,.82);
+      box-shadow: 0 12px 30px rgba(17,24,39,.10);
+      transform: translateY(-1px);
+      transition: transform .12s ease, box-shadow .18s ease, background-color .18s ease;
+    }
+    .wb .wb-nav-actions{ display:flex; gap: 10px; justify-content:flex-end; align-items:center; }
+
+    /* Mobile nav via details */
+    .wb .wb-nav-mobile{ display:none; }
+    @media (max-width: 980px){
+      .wb .wb-menu{ display:none; }
+      .wb .wb-nav-mobile{ display:block; width: 100%; }
+      .wb .wb-navbar{ flex-wrap: wrap; }
+      .wb .wb-nav-actions{ width: 100%; justify-content:flex-end; }
+      .wb .wb-nav-mobile details{
+        border: 1px solid rgba(17,24,39,.10);
+        border-radius: 16px;
+        background: rgba(255,255,255,.70);
+        overflow: hidden;
+      }
+      .wb .wb-nav-mobile summary{
+        cursor: pointer;
+        list-style: none;
+        padding: 12px 14px;
+        display:flex; align-items:center; justify-content: space-between; gap: 10px;
+        font-weight: 900;
+      }
+      .wb .wb-nav-mobile summary::-webkit-details-marker{ display:none; }
+      .wb .wb-nav-mobile summary::after{ content:"≡"; font-weight: 1000; opacity: .75; }
+      .wb .wb-nav-mobile .wb-navlist{
+        display:grid;
+        gap: 10px;
+        padding: 12px 14px 14px;
+      }
+      .wb .wb-nav-mobile .wb-navlist a{
+        padding: 10px 12px;
+        border-radius: 14px;
+        border: 1px solid rgba(17,24,39,.10);
+        background: rgba(255,255,255,.78);
+        font-size: 14px;
+      }
+    }
+
+    /* Hero wrap */
+    .wb .wb-hero-wrap{
+      margin-top: 16px;
+      border-radius: calc(var(--radius) + 10px);
+      border: 1px solid rgba(17,24,39,.08);
+      background:
+        radial-gradient(900px 420px at 10% 10%, rgba(255,241,194,.68), rgba(255,241,194,0) 60%),
+        radial-gradient(900px 420px at 100% 20%, rgba(230,196,108,.38), rgba(230,196,108,0) 58%),
+        linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,.52));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    .wb .wb-hero-inner{ padding: clamp(16px, 2.3vw, 26px); }
+
+    .wb .wb-eyebrow{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 10px 14px;
+      border: 1px solid rgba(230,196,108,.40);
+      background: linear-gradient(180deg, rgba(255,241,194,.72), rgba(255,255,255,.72));
+      border-radius: 999px;
+      font-weight: 900;
+      color: rgba(17,24,39,.86);
+      width: fit-content;
+    }
+    .wb .wb-eyebrow::before{
+      content:"";
+      width:10px; height:10px; border-radius: 999px;
+      background: rgba(230,196,108,.95);
+      box-shadow: 0 0 0 6px rgba(230,196,108,.22);
+    }
+
+    /* Hero image placeholder (no broken image; won't shift layout) */
+    .wb .wb-photo{
+      border-radius: calc(var(--radius) - 2px);
+      border: 1px solid rgba(17,24,39,.10);
+      overflow: hidden;
+      background:
+        radial-gradient(closest-side at 40% 35%, rgba(230,196,108,.45), rgba(230,196,108,0) 60%),
+        linear-gradient(135deg, rgba(255,241,194,.60), rgba(255,255,255,.92));
+      box-shadow: 0 16px 46px rgba(17,24,39,.14);
+      position: relative;
+    }
+    .wb .wb-photo::before{
+      content:"";
+      position:absolute; inset:0;
+      background-image: var(--hero-img);
+      background-size: cover;
+      background-position: center;
+    }
+    .wb .wb-photo::after{
+      content:"紋繡師形象照（替換圖片即可）";
+      position:absolute;
+      left: 14px; bottom: 14px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(17,24,39,.10);
+      font-size: 12px;
+      color: rgba(17,24,39,.70);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .wb .wb-photo-ratio{ aspect-ratio: 4 / 5; width: 100%; }
+
+    /* Feature tiles */
+    .wb .wb-tile{
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(17,24,39,.10);
+      background: rgba(255,255,255,.72);
+      box-shadow: 0 14px 34px rgba(17,24,39,.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: transform .12s ease, box-shadow .18s ease;
+    }
+    .wb .wb-tile:hover{ transform: translateY(-1px); box-shadow: 0 18px 46px rgba(17,24,39,.12); }
+    .wb .wb-tile-head{ display:flex; align-items:flex-start; gap: 12px; }
+    .wb .wb-tile-ico{
+      width: 44px; height: 44px;
+      border-radius: 18px;
+      border: 1px solid rgba(230,196,108,.45);
+      background: linear-gradient(180deg, rgba(255,241,194,.78), rgba(255,255,255,.72));
+      display:grid; place-items: center;
+      box-shadow: 0 10px 26px rgba(17,24,39,.10);
+      flex: 0 0 44px;
+    }
+    .wb .wb-p{ margin: 8px 0 0; color: rgba(17,24,39,.74); line-height: 1.75; font-size: 14px; }
+
+    /* Services */
+    .wb .wb-service{ display:flex; flex-direction: column; gap: 10px; height: 100%; }
+    .wb .wb-service-badge{
+      display:inline-flex;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(230,196,108,.45);
+      background: rgba(255,241,194,.55);
+      color: rgba(17,24,39,.82);
+      font-weight: 1000;
+      font-size: 12px;
+      width: fit-content;
+    }
+    .wb .wb-art{
+      border-radius: 20px;
+      border: 1px solid rgba(17,24,39,.10);
+      background:
+        radial-gradient(closest-side at 30% 30%, rgba(230,196,108,.40), rgba(230,196,108,0) 60%),
+        linear-gradient(135deg, rgba(255,241,194,.70), rgba(255,255,255,.92));
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 14px 34px rgba(17,24,39,.10);
+    }
+    .wb .wb-art::before{
+      content:"";
+      position:absolute; inset:0;
+      background-image: var(--img);
+      background-size: cover;
+      background-position: center;
+    }
+    .wb .wb-art::after{
+      content: attr(data-cap);
+      position:absolute; left: 12px; bottom: 12px;
+      padding: 7px 9px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(17,24,39,.10);
+      font-size: 12px;
+      color: rgba(17,24,39,.68);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .wb .wb-art-ratio{ aspect-ratio: 16 / 10; width: 100%; }
+
+    /* Gallery */
+    .wb .wb-gallery{
+      display:grid;
+      gap: clamp(10px, 1.4vw, 14px);
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 980px){ .wb .wb-gallery{ grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px){ .wb .wb-gallery{ grid-template-columns: 1fr; } }
+
+    /* Steps */
+    .wb .wb-steps{ display:grid; gap: 12px; }
+    .wb .wb-step{
+      padding: 16px 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(17,24,39,.10);
+      background: rgba(255,255,255,.76);
+      box-shadow: 0 14px 34px rgba(17,24,39,.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display:grid;
+      grid-template-columns: 56px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .wb .wb-step-badge{
+      width: 56px; height: 56px;
+      border-radius: 22px;
+      border: 1px solid rgba(230,196,108,.45);
+      background: linear-gradient(180deg, rgba(255,241,194,.78), rgba(255,255,255,.72));
+      box-shadow: 0 10px 26px rgba(17,24,39,.10);
+      display:grid; place-items:center;
+      font-weight: 1000;
+      color: rgba(17,24,39,.86);
+    }
+    .wb .wb-step-title{ margin: 0; font-weight: 1000; letter-spacing: -0.01em; }
+    .wb .wb-step-desc{ margin: 6px 0 0; color: rgba(17,24,39,.72); line-height: 1.75; font-size: 14px; }
+
+    /* Testimonials (separate section) */
+    .wb .wb-quote{
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(17,24,39,.10);
+      background: rgba(255,255,255,.78);
+      box-shadow: 0 14px 34px rgba(17,24,39,.10);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
+    }
+    .wb .wb-quote::before{
+      content:"“";
+      position:absolute; left: 14px; top: 6px;
+      font-size: 48px;
+      line-height: 1;
+      color: rgba(230,196,108,.55);
+      font-weight: 1000;
+    }
+    .wb .wb-quote p{ margin: 0; padding-left: 18px; color: rgba(17,24,39,.78); line-height: 1.75; font-size: 14px; }
+    .wb .wb-quote small{ display:block; margin-top: 10px; padding-left: 18px; color: rgba(17,24,39,.56); font-size: 12px; }
+
+    /* Maps */
+    .wb .wb-map{
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(17,24,39,.10);
+      background: rgba(255,255,255,.78);
+      box-shadow: 0 14px 34px rgba(17,24,39,.10);
+    }
+    .wb .wb-map iframe{
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 300px !important;
+      border: 0 !important;
+      display:block;
+    }
+
+    /* FAQ */
+    .wb details{
+      border-radius: 20px;
+      border: 1px solid rgba(17,24,39,.10);
+      background: rgba(255,255,255,.78);
+      box-shadow: 0 12px 28px rgba(17,24,39,.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      overflow: hidden;
+    }
+    .wb summary{
+      cursor: pointer;
+      list-style: none;
+      padding: 16px 16px;
+      display:flex; align-items:center; justify-content: space-between; gap: 12px;
+      font-weight: 1000;
+      letter-spacing: -0.01em;
+    }
+    .wb summary::-webkit-details-marker{ display:none; }
+    .wb summary::after{ content:"＋"; font-weight: 1000; opacity: .7; }
+    .wb details[open] summary::after{ content:"－"; }
+    .wb .wb-faq-a{ padding: 0 16px 16px; color: rgba(17,24,39,.74); line-height: 1.8; font-size: 14px; }
+
+    /* Floating CTAs (bottom-right) */
+    .wb .wb-float{
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 9999;
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-end;
+    }
+    .wb .wb-float a{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(17,24,39,.12);
+      background: rgba(255,255,255,.82);
+      box-shadow: 0 18px 46px rgba(17,24,39,.14);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      font-weight: 1000;
+      font-size: 14px;
+      white-space: nowrap;
+      transition: transform .12s ease;
+    }
+    .wb .wb-float a:hover{ transform: translateY(-1px); }
+    .wb .wb-float .wb-float--primary{
+      background: linear-gradient(180deg, rgba(230,196,108,1), rgba(230,196,108,.86));
+      border-color: rgba(230,196,108,.78);
+    }
+    .wb .wb-float .wb-float--ghost{
+      background: rgba(255,255,255,.82);
+      border-color: rgba(17,24,39,.16);
+    }
+    .wb .wb-float .wb-float--top{
+      background: rgba(255,255,255,.82);
+      border-color: rgba(17,24,39,.16);
+    }
+    @media (max-width: 560px){
+      .wb .wb-float a span{ display:none; } /* icon-only on small screens */
+      .wb .wb-float a{ padding: 12px; }
+    }
+
+    /* Section anchor offset (so sticky nav doesn't cover headings) */
+    .wb .wb-anchor{ scroll-margin-top: 84px; }
+
+    /* Breathing room (so floating buttons never cover last lines) */
+    .wb .wb-safe-bottom{ padding-bottom: 96px; }
+    @media (max-width: 560px){ .wb .wb-safe-bottom{ padding-bottom: 120px; } }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .wb .wb-btn, .wb .wb-tile{ transition: none !important; }
+      .wb .wb-btn:hover, .wb .wb-tile:hover{ transform: none !important; }
+      .wb .wb-menu a:hover{ transform: none !important; }
+      .wb .wb-float a:hover{ transform: none !important; }
+    }
+  </style>
+
+  <!-- Sticky Nav -->
+  <div class="wb-nav" role="navigation" aria-label="頁面選單">
+    <div class="wb-container">
+      <div class="wb-navbar">
+        <a class="wb-brand" href="#wb-top" aria-label="回到最上方">
+          <span class="wb-dot" aria-hidden="true"></span>
+          <span>Winkbrows</span>
+        </a>
+
+        <nav class="wb-menu" aria-label="區段連結">
+          <a href="#wb-services">服務項目</a>
+          <a href="#wb-portfolio">作品案例</a>
+          <a href="#wb-testimonials">顧客回饋</a>
+          <a href="#wb-locations">雙店資訊</a>
+          <a href="#wb-faq">FAQ</a>
+        </nav>
+
+        <div class="wb-nav-actions">
+          <a class="wb-btn wb-btn-primary js-cta-line" data-cta="line" data-placement="nav" href="https://lin.ee/NqShKuA" target="_blank" rel="noopener" aria-label="立即加 LINE 預約">
+            <svg class="wb-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M21 12a8 8 0 0 1-8 8H7l-4 3V20a8 8 0 1 1 18-8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M8 10h8M8 14h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            立即加 LINE 預約
+          </a>
+        </div>
+
+        <!-- Mobile menu -->
+        <div class="wb-nav-mobile" aria-label="手機選單">
+          <details>
+            <summary>選單</summary>
+            <div class="wb-navlist">
+              <a href="#wb-services">服務項目</a>
+              <a href="#wb-portfolio">作品案例</a>
+              <a href="#wb-testimonials">顧客回饋</a>
+              <a href="#wb-locations">雙店資訊</a>
+              <a href="#wb-faq">FAQ</a>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wb-safe-bottom">
+    <!-- HERO -->
+    <header class="wb-container wb-section" aria-label="主視覺">
+      <div class="wb-hero-wrap">
+        <div class="wb-hero-inner">
+          <div class="wb-grid wb-grid-2">
+            <div>
+              <div class="wb-eyebrow">自然耐看霧眉</div>
+              <h1 class="wb-h1">Winkbrows｜台南／新營霧眉</h1>
+              <p class="wb-lead">
+                把眉型做得更貼合臉型比例，讓你不上妝也有精神、上妝更俐落。以骨骼與眼窩為基礎做客製設計，顏色依膚色建議，走自然耐看路線。
+              </p>
+              <p class="wb-small">價格、方案與可預約時間請透過 LINE 官方帳號查看並直接預約。</p>
+
+              <!-- Buttons aligned right (per your preference) -->
+              <div class="wb-actions">
+                <a class="wb-btn wb-btn-ghost js-cta-ig" data-cta="ig" data-placement="hero" href="https://www.instagram.com/wbbrows/" target="_blank" rel="noopener">
+                  <svg class="wb-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Z" stroke="currentColor" stroke-width="2"/>
+                    <path d="M7 15l2.5-2.5 2 2L15.5 11 19 14.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  前往 IG 看作品
+                </a>
+                <a class="wb-btn wb-btn-primary js-cta-line" data-cta="line" data-placement="hero" href="https://lin.ee/NqShKuA" target="_blank" rel="noopener">
+                  <svg class="wb-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M21 12a8 8 0 0 1-8 8H7l-4 3V20a8 8 0 1 1 18-8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M8 10h8M8 14h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                  立即加 LINE 預約
+                </a>
+              </div>
+
+              <div class="wb-grid wb-grid-3" style="margin-top: 18px;">
+                <div class="wb-tile">
+                  <div class="wb-tile-head">
+                    <div class="wb-tile-ico" aria-hidden="true">
+                      <svg class="wb-ico" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2l7 4v6c0 5-3 9-7 10-4-1-7-5-7-10V6l7-4Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M9.5 12l1.8 1.8L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="wb-h3">9 年資歷</p>
+                      <p class="wb-p">累積大量眉況與比例判斷經驗。</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wb-tile">
+                  <div class="wb-tile-head">
+                    <div class="wb-tile-ico" aria-hidden="true">
+                      <svg class="wb-ico" viewBox="0 0 24 24" fill="none">
+                        <path d="M16 11c1.66 0 3-1.57 3-3.5S17.66 4 16 4s-3 1.57-3 3.5S14.34 11 16 11Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M8 11c1.66 0 3-1.57 3-3.5S9.66 4 8 4 5 5.57 5 7.5 6.34 11 8 11Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M8 15c1.2-.9 2.6-1.4 4-1.4S14.8 14.1 16 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M2 20c0-3 3-5 6-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M22 20c0-3-3-5-6-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="wb-h3">2000+ 累積服務</p>
+                      <p class="wb-p">以自然耐看為核心取向。</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wb-tile">
+                  <div class="wb-tile-head">
+                    <div class="wb-tile-ico" aria-hidden="true">
+                      <svg class="wb-ico" viewBox="0 0 24 24" fill="none">
+                        <path d="M3 17l6-6 4 4 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M19 8h2v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="wb-h3">每年海內外進修至少 6 次</p>
+                      <p class="wb-p">持續更新技術與審美。</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Image placeholder (won't break layout if you later replace) -->
+            <div class="wb-card">
+              <div class="wb-card-inner">
+                <div class="wb-photo" style="--hero-img:url('assets/portrait/artist.jpg');" aria-label="紋繡師形象照（可替換）">
+                  <div class="wb-photo-ratio"></div>
+                </div>
+                <div class="wb-divider"></div>
+                <p class="wb-small" style="margin:0;">
+                  建議：加 LINE 前可先準備「眉部素顏照」與「想要的眉感參考圖」，溝通會更精準。
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- VALUE -->
+    <section class="wb-section wb-anchor" id="wb-value" aria-label="價值重點">
+      <div class="wb-container">
+        <div class="wb-grid wb-grid-2" style="align-items:start;">
+          <div>
+            <h2 class="wb-h2">先把你擔心的說清楚</h2>
+            <p class="wb-lead wb-muted">想做得漂亮，也想恢復得好看。</p>
+            <p class="wb-lead" style="margin-bottom:0;">
+              我們把重點放在「客製設計、過渡期與衛生」，用可預期的方式讓你安心安排工作、社交與生活節奏。實際呈現仍會依膚況、代謝與術後照護而異。
+            </p>
+          </div>
+
+          <div class="wb-grid wb-grid-4" style="grid-template-columns: 1fr 1fr;">
+            <div class="wb-tile">
+              <div class="wb-tile-head">
+                <div class="wb-tile-ico" aria-hidden="true">
+                  <svg class="wb-ico" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 3c3.9 0 7 3.1 7 7 0 5-7 11-7 11S5 15 5 10c0-3.9 3.1-7 7-7Z" stroke="currentColor" stroke-width="2"/>
+                    <path d="M9.5 10.5c.8-1.2 1.9-1.8 2.5-1.8s1.7.6 2.5 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="wb-h3">自然、耐看</p>
+                  <p class="wb-p">依骨骼／眼窩／臉型調整眉型，顏色依膚色建議。</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="wb-tile">
+              <div class="wb-tile-head">
+                <div class="wb-tile-ico" aria-hidden="true">
+                  <svg class="wb-ico" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 8v4l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M21 12a9 9 0 1 1-3-6.7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M21 3v6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="wb-h3">過渡期相對短</p>
+                  <p class="wb-p">以降低厚結痂與尷尬期為目標（依個體而異）。</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="wb-tile">
+              <div class="wb-tile-head">
+                <div class="wb-tile-ico" aria-hidden="true">
+                  <svg class="wb-ico" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2l2.4 6.7L21 9l-5.2 4 1.8 7L12 16.8 6.4 20l1.8-7L3 9l6.6-.3L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="wb-h3">留色表現佳</p>
+                  <p class="wb-p">維持度受膚況與照護影響；會先溝通再安排。</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="wb-tile">
+              <div class="wb-tile-head">
+                <div class="wb-tile-ico" aria-hidden="true">
+                  <svg class="wb-ico" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2a4 4 0 0 0-4 4v2a4 4 0 0 0 8 0V6a4 4 0 0 0-4-4Z" stroke="currentColor" stroke-width="2"/>
+                    <path d="M7 10v10a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V10" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="wb-h3">衛生與耗材</p>
+                  <p class="wb-p">一次性耗材不重複使用，流程清楚、降低疑慮。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wb-actions" style="grid-column: 1 / -1;">
+            <a class="wb-btn wb-btn-ghost js-cta-ig" data-cta="ig" data-placement="value" href="https://www.instagram.com/wbbrows/" target="_blank" rel="noopener">先看作品再決定</a>
+            <a class="wb-btn wb-btn-primary js-cta-line" data-cta="line" data-placement="value" href="https://lin.ee/NqShKuA" target="_blank" rel="noopener">加 LINE 先傳照片諮詢</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="wb-section wb-anchor" id="wb-services" aria-label="服務項目">
+      <div class="wb-container">
+        <div class="wb-card">
+          <div class="wb-card-inner">
+            <div class="wb-grid" style="gap: 6px;">
+              <h2 class="wb-h2" style="margin:0;">服務項目（霧眉為主）</h2>
+              <p class="wb-lead wb-muted" style="margin:0;">霧眉優先；其他項目可依眉況與偏好評估。</p>
+            </div>
+
+            <div class="wb-divider"></div>
+
+            <div class="wb-grid wb-grid-4">
+              <article class="wb-service">
+                <div class="wb-art" data-cap="示意圖（可替換）" style="--img:url('assets/services/ombre-brows.jpg');">
+                  <div class="wb-art-ratio"></div>
+                </div>
+                <div>
+                  <span class="wb-service-badge">主推</span>
+                  <p class="wb-h3" style="margin-top: 10px;">霧眉（主推）</p>
+                  <p class="wb-p">柔霧妝感、日常百搭。適合想省下畫眉時間、希望整體更精緻俐落的人。</p>
+                </div>
+              </article>
+
+              <article class="wb-service">
+                <div class="wb-art" data-cap="示意圖（可替換）" style="--img:url('assets/services/stroke-brows.jpg');">
+                  <div class="wb-art-ratio"></div>
+                </div>
+                <div>
+                  <span class="wb-service-badge">評估</span>
+                  <p class="wb-h3" style="margin-top: 10px;">飄眉</p>
+                  <p class="wb-p">偏線條毛流感，想要更明顯線條感者可評估，同樣以自然比例為核心。</p>
+                </div>
+              </article>
+
+              <article class="wb-service">
+                <div class="wb-art" data-cap="示意圖（可替換）" style="--img:url('assets/services/lip-blush.jpg');">
+                  <div class="wb-art-ratio"></div>
+                </div>
+                <div>
+                  <span class="wb-service-badge">加分</span>
+                  <p class="wb-h3" style="margin-top: 10px;">紋唇</p>
+                  <p class="wb-p">提升氣色與妝感一致性；呈現效果依唇色與代謝而異。</p>
+                </div>
+              </article>
+
+              <article class="wb-service">
+                <div class="wb-art" data-cap="示意圖（可替換）" style="--img:url('assets/services/training.jpg');">
+                  <div class="wb-art-ratio"></div>
+                </div>
+                <div>
+                  <span class="wb-service-badge">洽詢</span>
+                  <p class="wb-h3" style="margin-top: 10px;">教學</p>
+                  <p class="wb-p">課程內容、檔期與方案請透過 LINE 洽詢（LINE 可查看）。</p>
+                </div>
+              </article>
+            </div>
+
+            <div class="wb-actions">
+              <a class="wb-btn wb-btn-ghost js-cta-ig" data-cta="ig" data-placement="services" href="https://www.instagram.com/wbbrows/" target="_blank" rel="noopener">前往 IG 看作品</a>
+              <a class="wb-btn wb-btn-primary js-cta-line" data-cta="line" data-placement="services" href="https://lin.ee/NqShKuA" target="_blank" rel="noopener">立即加 LINE 預約</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section class="wb-section wb-anchor" id="wb-portfolio" aria-label="作品案例">
+      <div class="wb-container">
+        <div class="wb-grid" style="gap: 6px;">
+          <h2 class="wb-h2" style="margin:0;">作品案例</h2>
+          <p class="wb-lead wb-muted" style="margin:0;">這裡先放 6 張代表作；想看更多近拍與不同眉況呈現，建議直接到 IG。</p>
+        </div>
+
+        <div style="height: 14px;"></div>
+
+        <div class="wb-gallery" aria-label="作品圖集（示意，可替換）">
+          <div class="wb-art" data-cap="作品 01" style="--img:url('assets/portfolio/01.jpg');"><div class="wb-art-ratio" style="aspect-ratio:1/1;"></div></div>
+          <div class="wb-art" data-cap="作品 02" style="--img:url('assets/portfolio/02.jpg');"><div class="wb-art-ratio" style="aspect-ratio:1/1;"></div></div>
+          <div class="wb-art" data-cap="作品 03" style="--img:url('assets/portfolio/03.jpg');"><div class="wb-art-ratio" style="aspect-ratio:1/1;"></div></div>
+          <div class="wb-art" data-cap="作品 04" style="--img:url('assets/portfolio/04.jpg');"><div class="wb-art-ratio" style="aspect-ratio:1/1;"></div></div>
+          <div class="wb-art" data-cap="作品 05" style="--img:url('assets/portfolio/05.jpg');"><div class="wb-art-ratio" style="aspect-ratio:1/1;"></div></div>
+          <div class="wb-art" data-cap="作品 06" style="--img:url('assets/portfolio/06.jpg');"><div class="wb-art-ratio" style="aspect-ratio:1/1;"></div></div>
+        </div>
+
+        <div class="wb-actions">
+          <a class="wb-btn wb-btn-ghost js-cta-ig" data-cta="ig" data-placement="portfolio" href="https://www.instagram.com/wbbrows/" target="_blank" rel="noopener">前往 IG 看更多作品</a>
+          <a class="wb-btn wb-btn-primary js-cta-line" data-cta="line" data-placement="portfolio" href="https://lin.ee/NqShKuA" target="_blank" rel="noopener">看完作品，加 LINE 詢問檔期</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROOF (no testimonials here) -->
+    <section class="wb-section wb-anchor" id="wb-proof" aria-label="信任與政策">
+      <div class="wb-container">
+        <div class="wb-card">
+          <div class="wb-card-inner">
+            <h2 class="wb-h2">你可以放心交給 Winkbrows 的理由</h2>
+            <p class="wb-lead wb-muted">把每一步做好，你才會更安心。</p>
+
+            <div class="wb-grid wb-grid-3">
+              <div class="wb-tile">
+                <div class="wb-tile-head">
+                  <div class="wb-tile-ico" aria-hidden="true">
+                    <svg class="wb-ico" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 2l7 4v6c0 5-3 9-7 10-4-1-7-5-7-10V6l7-4Z" stroke="currentColor" stroke-width="2"/>
+                      <path d="M9.5 12l1.8 1.8L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="wb-h3">補色政策（更安心）</p>
+                    <p class="wb-p">三個月內同一項目，如對顏色呈現仍有期待，可安排補色，僅收材料費（以現場評估與檔期為準）。</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wb-tile">
+                <div class="wb-tile-head">
+                  <div class="wb-tile-ico" aria-hidden="true">
+                    <svg class="wb-ico" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 2a4 4 0 0 0-4 4v2a4 4 0 0 0 8 0V6a4 4 0 0 0-4-4Z" stroke="currentColor" stroke-width="2"/>
+                      <path d="M7 10v10a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V10" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="wb-h3">訂金／改期／取消</p>
+                    <p class="wb-p">訂金 1000 元。改期需至少提前 1 天告知。取消提前 1 天告知全退；當天告知不退。</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wb-tile">
+                <div class="wb-tile-head">
+                  <div class="wb-tile-ico" aria-hidden="true">
+                    <svg class="wb-ico" viewBox="0 0 24 24" fill="none">
+                      <path d="M4 7h16M6 11h12M8 15h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                      <path d="M6 3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3Z" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="wb-h3">價格／方案／可預約時間</p>
+                    <p class="wb-p">以 LINE 官方帳號資訊為準（可直接查看並預約）。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wb-actions">
+              <a class="wb-btn wb-btn-primary js-cta-line" data-cta="line" data-placement="proof" href="https://lin.ee/NqShKuA" target="_blank" rel="noopener">立即加 LINE 預約</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS (separated) -->
+    <section class="wb-section wb-anchor" id="wb-testimonials" aria-label="顧客回饋">
+      <div class="wb-container">
+        <div class="wb-grid" style="gap: 6px;">
+          <h2 class="wb-h2" style="margin:0;">顧客回饋</h2>
+          <p class="wb-lead wb-muted" style="margin:0;">每個人的感受與恢復狀況因人而異；以下為常見回饋摘錄。</p>
+        </div>
+
+        <div style="height: 14px;"></div>
+
+        <div class="wb-grid wb-grid-3">
+          <div class="wb-quote">
+            <p>「超無感都不會痛甚至差點睡著」</p>
+            <small>實際感受依個人狀況而異</small>
+          </div>
+          <div class="wb-quote">
+            <p>「不會有尷尬的蠟筆小新期」</p>
+            <small>恢復狀況依膚況與術後照護而異</small>
+          </div>
+          <div class="wb-quote">
+            <p>「事前溝通確認都很細心」「霧眉後衛教也很仔細」</p>
+            <small>以溝通與照護為核心的服務體驗</small>
+          </div>
+        </div>
+
+        <div class="wb-actions">
+          <a class="wb-btn wb-btn-ghost js-cta-ig" data-cta="ig" data-placement="testimonials" href="https://www.instagram.com/wbbrows/" target="_blank" rel="noopener">到 IG 看更多案例</a>
+          <a class="wb-btn wb-btn-primary js-cta-line" data-cta="line" data-placement="testimonials" href="https://lin.ee/NqShKuA" target="_blank" rel="noopener">想要同款感覺？加 LINE 諮詢</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="wb-section wb-anchor" id="wb-process" aria-label="預約流程">
+      <div class="wb-container">
+        <div class="wb-grid wb-grid-2" style="align-items:start;">
+          <div>
+            <h2 class="wb-h2">預約流程</h2>
+            <p class="wb-lead wb-muted">簡單 4 步，先聊清楚再安排。</p>
+            <p class="wb-lead" style="margin-bottom:0;">
+              時間與檔期以 LINE 官方帳號為準。現場會以你的眉況與偏好做確認，讓結果更貼近你想要的感覺。
+            </p>
+          </div>
+
+          <div class="wb-steps">
+            <div class="wb-step">
+              <div class="wb-step-badge">1</div>
+              <div>
+                <p class="wb-step-title">LINE 詢問與需求確認</p>
+                <p class="wb-step-desc">告訴我們你的眉況、偏好、生活作息；也可傳眉部素顏照與參考圖。</p>
+              </div>
+            </div>
+            <div class="wb-step">
+              <div class="wb-step-badge">2</div>
+              <div>
+                <p class="wb-step-title">現場諮詢與設計定稿</p>
+                <p class="wb-step-desc">依臉型比例與膚色確認眉型與顏色，確認後再進行下一步。</p>
+              </div>
+            </div>
+            <div class="wb-step">
+              <div class="wb-step-badge">3</div>
+              <div>
+                <p class="wb-step-title">操作完成</p>
+                <p class="wb-step-desc">時間依項目與個案而異；可預約時段請以 LINE 官方帳號資訊為準。</p>
+              </div>
+            </div>
+            <div class="wb-step">
+              <div class="wb-step-badge">4</div>
+              <div>
+                <p class="wb-step-title">術後照護與回訪評估</p>
+                <p class="wb-step-desc">提供衛教重點；如對顏色呈現仍有期待，可依政策評估補色。</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="wb-actions" style="grid-column: 1 / -1;">
+            <a class="wb-btn wb-btn-primary js-cta-line" data-cta="line" data-placement="process" href="https://lin.ee/NqShKuA" target="_blank" rel="noopener">立即加 LINE 預約</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOCATIONS -->
+    <section class="wb-section wb-anchor" id="wb-locations" aria-label="雙店資訊">
+      <div class="wb-container">
+        <div class="wb-grid" style="gap: 6px;">
+          <h2 class="wb-h2" style="margin:0;">雙店資訊</h2>
+          <p class="wb-lead wb-muted" style="margin:0;">台南／新營皆可預約，檔期以 LINE 官方帳號為準。</p>
+        </div>
+
+        <div style="height: 14px;"></div>
+
+        <div class="wb-grid wb-grid-2" style="align-items:start;">
+          <div class="wb-card">
+            <div class="wb-card-inner">
+              <p class="wb-h3">台南店</p>
+              <p class="wb-lead" style="margin: 8px 0 14px; font-size: 15px; color: rgba(17,24,39,.78);">台南市東區育樂街179號2樓</p>
+              <div class="wb-map" aria-label="台南店地圖">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14691.251561525813!2d120.21474600000002!3d22.993907!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e768dd91681fb%3A0x8661daa7cba53025!2zNzAx5Y-w54Gj6Ie65Y2X5biC5p2x5Y2A6IKy5qiC6KGXMTc56Jmf!5e0!3m2!1szh-TW!2sus!4v1768408291581!5m2!1szh-TW!2sus" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="台南店 Google 地圖"></iframe>
+              </div>
+
+              <div class="wb-divider"></div>
+
+              <p class="wb-small" style="margin:0 0 8px;">
+                <strong>停車建議：</strong>南一中後門停車場（看到掘旅青年旅舍轉進去 → 看到南一中 → 右轉）
+              </p>
+              <ul class="wb-small" style="margin:0; padding-left: 18px;">
+                <li>走路約 1 分鐘：30 元/時，每日上限 150</li>
+                <li>走路約 3–4 分鐘：10 元/時，每日上限 50</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="wb-card">
+            <div class="wb-card-inner">
+              <p class="wb-h3">新營店</p>
+              <p class="wb-lead" style="margin: 8px 0 14px; font-size: 15px; color: rgba(17,24,39,.78);">台南市新營區博愛街35號1樓</p>
+              <div class="wb-map" aria-label="新營店地圖">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3664.3153879874426!2d120.31255767604213!3d23.304313105754137!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e856d793b425f%3A0x532a83db2724bff0!2sWink%20Brows%20Studio!5e0!3m2!1szh-TW!2sus!4v1768408364082!5m2!1szh-TW!2sus" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="新營店 Google 地圖"></iframe>
+              </div>
+
+              <div class="wb-divider"></div>
+
+              <p class="wb-small" style="margin:0;">
+                <strong>停車建議：</strong>店門口路邊可停（請依現場標線與交通規範）。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="wb-actions">
+          <a class="wb-btn wb-btn-ghost js-cta-ig" data-cta="ig" data-placement="locations" href="https://www.instagram.com/wbbrows/" target="_blank" rel="noopener">前往 IG 看作品</a>
+          <a class="wb-btn wb-btn-primary js-cta-line" data-cta="line" data-placement="locations" href="https://lin.ee/NqShKuA" target="_blank" rel="noopener">立即加 LINE 預約</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="wb-section wb-anchor" id="wb-faq" aria-label="常見問題">
+      <div class="wb-container">
+        <div class="wb-card">
+          <div class="wb-card-inner">
+            <h2 class="wb-h2">FAQ</h2>
+            <div class="wb-grid" style="gap: 12px;">
+              <details>
+                <summary>霧眉和飄眉差在哪？我適合哪一種？</summary>
+                <div class="wb-faq-a">
+                  霧眉偏柔霧妝感、日常好搭配；飄眉偏線條毛流感、想要更明顯線條感者可評估。最準的方式是加 LINE 傳「眉部素顏照＋參考圖」，再依臉型比例與眉況建議。
+                </div>
+              </details>
+
+              <details>
+                <summary>會不會痛？恢復期大概多久？</summary>
+                <div class="wb-faq-a">
+                  感受與恢復狀況因人而異；多數回饋感受較輕微。建議依你的作息安排時間，並依術後照護降低刺激與不適。
+                </div>
+              </details>
+
+              <details>
+                <summary>價格、方案、可預約時間在哪裡看？</summary>
+                <div class="wb-faq-a">
+                  透過 LINE 官方帳號即可查看價格、方案與可預約時段，並可直接預約。
+                </div>
+              </details>
+
+              <details>
+                <summary>訂金怎麼算？可以改期或取消嗎？</summary>
+                <div class="wb-faq-a">
+                  訂金 1000 元。改期需至少提前 1 天告知；取消提前 1 天告知全退，當天告知不退。
+                </div>
+              </details>
+
+              <details>
+                <summary>補色政策怎麼算？</summary>
+                <div class="wb-faq-a">
+                  三個月內同一項目，如對顏色呈現仍有期待，可安排補色，僅收材料費（以現場評估與檔期為準）。
+                </div>
+              </details>
+
+              <details>
+                <summary>什麼狀況建議先諮詢？</summary>
+                <div class="wb-faq-a">
+                  若你有特殊膚況、近期有重要行程，或希望更精準安排，建議先透過 LINE 說明狀況再預約。本服務為美容紋繡非醫療行為。
+                </div>
+              </details>
+            </div>
+
+            <div class="wb-actions">
+              <a class="wb-btn wb-btn-primary js-cta-line" data-cta="line" data-placement="faq" href="https://lin.ee/NqShKuA" target="_blank" rel="noopener">立即加 LINE 預約</a>
+            </div>
+
+            <div class="wb-divider"></div>
+            <p class="wb-small" style="margin:0;">
+              免責聲明：效果、留色與恢復狀況依個人膚況、代謝、生活作息與術後照護而異；本服務為美容紋繡非醫療行為。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <section class="wb-section" style="padding-top: 0;">
+      <div class="wb-container">
+        <p class="wb-small" style="margin:0; text-align:center; opacity:.85;">© Winkbrows（版型示意，可替換圖片與文字）</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Floating CTAs bottom-right (LINE / IG / Back-to-top) -->
+  <div class="wb-float" aria-label="浮動快速操作">
+    <a class="wb-float--top" href="#wb-top" data-cta="top" data-placement="float" aria-label="回到最上方">
+      <svg class="wb-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 5l-7 7h4v7h6v-7h4l-7-7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <span>回到最上方</span>
+    </a>
+
+    <a class="wb-float--ghost js-cta-ig" href="https://www.instagram.com/wbbrows/" target="_blank" rel="noopener" data-cta="ig" data-placement="float" aria-label="前往 IG 看作品">
+      <svg class="wb-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Z" stroke="currentColor" stroke-width="2"/>
+        <path d="M7 15l2.5-2.5 2 2L15.5 11 19 14.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>IG 作品</span>
+    </a>
+
+    <a class="wb-float--primary js-cta-line" href="https://lin.ee/NqShKuA" target="_blank" rel="noopener" data-cta="line" data-placement="float" aria-label="立即加 LINE 預約">
+      <svg class="wb-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M21 12a8 8 0 0 1-8 8H7l-4 3V20a8 8 0 1 1 18-8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M8 10h8M8 14h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span>LINE 預約</span>
+    </a>
+  </div>
+
+  <!-- ==========================================================
+    素材替換（不跑版）
+    - HERO：.wb-photo 的 style="--hero-img:url('assets/portrait/artist.jpg')"
+    - 服務示意圖：各 .wb-art 的 style="--img:url('...')"
+    - 作品集 6 張：#wb-portfolio 區塊內 6 個 .wb-art
+    圖片即使暫時不存在，也會以漸層底顯示，不會出現破圖圖示。
+  ========================================================== -->
+
+  <!-- ==========================================================
+    追蹤建議（GTM / GA4）
+    - LINE 點擊：a.js-cta-line[data-cta="line"]
+    - IG 點擊：a.js-cta-ig[data-cta="ig"]
+    - 浮動按鈕：data-placement="float"
+    - 區塊位置：data-placement="nav/hero/value/services/portfolio/testimonials/proof/process/locations/faq/float"
+    - FAQ 展開：.wb details（可用點擊 summary 觸發事件）
+  ========================================================== -->
+</section>
